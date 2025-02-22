@@ -3,6 +3,10 @@ package main
 import (
     "fmt"
     "net/http"
+    "net/http/httptest"
+    "testing"
+    "github.com/stretchr/testify/assert"
+
 )
 
 func logAndRespond(w http.ResponseWriter, statusCode int) {
@@ -37,4 +41,12 @@ func main() {
 
     // Start the server on port 8080
     http.ListenAndServe(":8080", nil)
+}
+
+func TestLogAndRespond(t *testing.T) {
+    rr := httptest.NewRecorder()
+    logAndRespond(rr, http.StatusOK)
+
+    assert.Equal(t, http.StatusOK, rr.Code)
+    assert.Equal(t, "OK\n", rr.Body.String())
 }

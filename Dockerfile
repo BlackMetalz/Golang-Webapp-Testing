@@ -10,6 +10,9 @@ ENV GO111MODULE=off
 # Copy the source from the current directory to the Working Directory inside the container
 COPY . .
 
+# Download dependencies
+RUN go mod download
+
 # Build the Go app
 RUN go build -o main .
 
