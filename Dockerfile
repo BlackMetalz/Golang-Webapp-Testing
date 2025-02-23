@@ -17,7 +17,10 @@ COPY . .
 RUN go build -o main .
 
 # Start a new stage from a lightweight image
-FROM alpine:latest
+# FROM alpine:latest 
+# fix OPA
+FROM alpine:3.21.3  
+
 
 WORKDIR /app/
 
