@@ -52,6 +52,10 @@ func main() {
         logAndRespond(w, http.StatusGatewayTimeout)
     })
 
+    http.HandleFunc("/version", func(w http.ResponseWriter, r *http.Request) {
+        fmt.Fprintln(w, "Version: 4.0.0")
+    })
+
     fmt.Println("Server starting on :8080")
     http.ListenAndServe(":8080", nil)
 }
