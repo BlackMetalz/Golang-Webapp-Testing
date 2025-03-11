@@ -6,6 +6,7 @@ import (
     "net/http/httptest"
     "testing"
     "github.com/stretchr/testify/assert"
+    "math/rand"
 )
 
 func addSecurityHeaders(w http.ResponseWriter) {
@@ -53,7 +54,12 @@ func main() {
     })
 
     http.HandleFunc("/version", func(w http.ResponseWriter, r *http.Request) {
-        fmt.Fprintln(w, "Version: 4.0.0")
+        if rand.Intn(2) == 0 { // 50% chance
+            logAndRespond(w, http.StatusGatewayTimeout)
+            return
+        }
+        
+        fmt.Fprintln(w, "Version: 5.0.0")
     })
 
     fmt.Println("Server starting on :8080")
